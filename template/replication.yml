@@ -15,7 +15,7 @@ Resources:
           - Sid: Enable IAM User Permissions
             Effect: Allow
             Principal:
-              AWS: !Sub arn:aws:iam::${AWS::AccountId}:root
+              AWS: !Sub arn:aws:iam::798868050023:root
             Action: kms:*
             Resource: '*'
           - Sid: Replication
@@ -38,8 +38,13 @@ Resources:
   Bucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
+    # rules:
+    #   Destination:
+    #     Bucket: arn:aws:s3:::$lila-archive-replication-us-east-2
+    #      encryptionConfiguration:
+    #        replicaKmsKeyId: arn:aws:kms:us-east-2:798868050023:alias/archive/replication
     Properties:
-      BucketName: !Sub ${Prefix}-archive-replication-${AWS::Region}
+      BucketName: !Sub lila-archive-replication-us-east-
       AccessControl: Private
       PublicAccessBlockConfiguration:
         BlockPublicAcls: Yes
@@ -53,8 +58,7 @@ Resources:
         - BucketKeyEnabled: Yes
           ServerSideEncryptionByDefault:
             SSEAlgorithm: aws:kms
-            KMSMasterKeyID: !Sub arn:aws:kms:${AWS::Region}:${AWS::AccountId}:${KeyAlias}
-
+            KMSMasterKeyID: !Sub arn:aws:kms:us-east-1:798868050023:alias/archive/replication
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
@@ -65,11 +69,11 @@ Resources:
               - s3:DeleteBucket
             Effect: Deny
             Resource:
-              - !Sub ${Bucket.Arn}
+              - !Sub arn:aws:s3:::lila-archive-replication-us-east-1
             Principal: '*'
           - Action:
               - s3:DeleteObjectVersion
             Effect: Deny
             Resource:
-              - !Sub ${Bucket.Arn}/*
+              - !Sub arn:aws:s3:::lila-archive-replication-us-east-1
             Principal: '*'
