@@ -1,8 +1,8 @@
 {
-  "name": "s3_rep",
+  "name": "stackset_test",
   "version": "0.1.0",
   "bin": {
-    "s3_rep": "bin/s3_rep.js"
+    "stackset_test": "bin/stackset_test.js"
   },
   "scripts": {
     "build": "tsc",
@@ -12,11 +12,11 @@
   },
   "devDependencies": {
     "@types/jest": "^27.5.0",
-    "@types/node": "10.17.27",
+    "@types/node": "^10.17.60",
     "@types/prettier": "2.6.0",
+    "aws-cdk": "2.26.0",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.4",
-    "aws-cdk": "2.26.0",
     "ts-node": "^10.7.0",
     "typescript": "~3.9.7"
   },
